@@ -420,7 +420,7 @@ class _VolumeControlState extends State<VolumeControl> {
                     quarterTurns: -1,
                     child: SliderTheme(
                       data: SliderThemeData(
-                        activeTrackColor: widget.activeColor,
+                        activeTrackColor: Colors.blue,
                         inactiveTrackColor: widget.inactiveColor,
                         thumbColor: widget.thumbColor,
                       ),

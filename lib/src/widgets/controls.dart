@@ -229,7 +229,7 @@ class ControlState extends State<Control> with SingleTickerProviderStateMixin {
                                   }),
                               SizedBox(width: 20),
                               IconButton(
-                                color: Colors.white,
+                                color: Colors.blue,
                                 iconSize: 30,
                                 icon: AnimatedIcon(
                                     icon: AnimatedIcons.play_pause,

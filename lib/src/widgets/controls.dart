@@ -23,6 +23,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:dart_vlc_ffi/src/device.dart';
 import 'package:dart_vlc_ffi/src/player.dart';
 import 'package:dart_vlc_ffi/src/player_state/player_state.dart';
+import 'package:intl/intl.dart';
 
 class Control extends StatefulWidget {
   Control({
@@ -279,6 +280,13 @@ class ControlState extends State<Control> with SingleTickerProviderStateMixin {
                       },
                     ),
                     Positioned(
+                      left: 10,
+                      bottom: 12.5,
+                      child: TimeOverlay(
+                        clockFormat: 'hh:mm:ss',
+                      ),
+                    ),
+                    Positioned(
                       right: 15,
                       bottom: 12.5,
                       child: Row(
@@ -363,6 +371,55 @@ class ControlState extends State<Control> with SingleTickerProviderStateMixin {
         });
       }
     });
+  }
+}
+
+class TimeOverlay extends StatefulWidget {
+  final String clockFormat;
+
+  const TimeOverlay({Key? key, required this.clockFormat}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => _TimeOverlay(clockFormat);
+}
+
+class _TimeOverlay extends State<TimeOverlay> {
+  final String _clockFormat;
+  String _timeStr = "";
+  Timer? clockTimer;
+
+  _TimeOverlay(this._clockFormat);
+
+  @override
+  void initState() {
+    _timeStr = _formatDateTime(DateTime.now());
+    Timer.periodic(Duration(seconds: 1), (timer) => _retrieveTime());
+    super.initState();
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return DateFormat(_clockFormat).format(dateTime);
+  }
+
+  void _retrieveTime() {
+    DateTime currTime = DateTime.now();
+    String formattedTime = _formatDateTime(currTime);
+    setState(() {
+      _timeStr = formattedTime;
+    });
+  }
+
+  @override
+  void dispose() {
+    clockTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _timeStr,
+      style: TextStyle(color: Colors.white),
+    );
   }
 }
 

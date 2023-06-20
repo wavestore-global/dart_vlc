@@ -392,7 +392,8 @@ class _TimeOverlay extends State<TimeOverlay> {
   @override
   void initState() {
     _timeStr = _formatDateTime(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (timer) => _retrieveTime());
+    clockTimer =
+        Timer.periodic(Duration(seconds: 1), (timer) => _retrieveTime());
     super.initState();
   }
 
